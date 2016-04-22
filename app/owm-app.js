@@ -1,4 +1,9 @@
 angular.module('OWMApp', ['ngRoute'])
+    .run(function($rootScope, $location) {
+        $rootScope.$on('$routeChangeError', function() {
+            $location.path('/error');
+        });
+    })
     .config(['$routeProvider', function($routeProvider){
         $routeProvider
             .when('/', {
@@ -22,17 +27,13 @@ angular.module('OWMApp', ['ngRoute'])
                     }
                 }
             })
+            .otherwise('/error');
     }])
     .controller('HomeCtrl', ['$scope', function($scope) {
         //empty for now
     }])
     .controller('CityCtrl', function($scope, city) {
         $scope.city = city;
-    })
-    .run(function($rootScope, $location) {
-        $rootScope.$on('$routeChangeError', function() {
-            $location.path('/error');
-        });
     })
     .value('owmCities', ['New York', 'Dallas', 'Chicago']);
 
